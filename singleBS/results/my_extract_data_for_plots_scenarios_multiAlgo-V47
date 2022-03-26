@@ -1,0 +1,365 @@
+#!/bin/bash
+
+#Set directory whre the results are and give the name of the algo/algos
+#Experiment dirs should have same name
+#Becareful when a algo can not take init solution!!!
+resultDirROOT="/my_home_ssd/kemal/my_dir/my_prog/Camerino/drone/plots/scenarios/scenario-based-plots/"
+#resultDirROOT=$(pwd)"/"
+#List of algos
+algoArray=(GA GenSA DEoptim)
+
+#List of Scenarios directories
+scnArray=(s1 s2 s3 s4)
+
+outDir=$resultDirRoot"out/"
+mkdir -p $outDir
+
+#Set number of experiments
+NEXP=1
+
+#Set the number of drones array for each round
+nDroneArray=(2 4 6 8 10 12)
+
+
+#Field separator format
+fl="15s"
+
+#Headers for output files
+headerNoInitSol=$(printf '%-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl'\n' "Ndrones" "wCoverage" "wDist" "FinCov" "FinTotDist" "FinMeanDist" "FinMedianDist" "FinOverflow" "FinOverlap")
+
+headerInitSol=$(printf '%-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl',  %-'$fl', %-'$fl', %-'$fl', %-'$fl'\n' "Scn" "Algo" "IS" "Ndrones" "wCoverage" "wDist" "OOPenalty" "InitCov" "FinCov" "InitTotDist" "FinTotDist"  "InitMeanDist" "FinMeanDist" "InitMedianDist" "FinMedianDist" "InitOverflow" "FinOverflow" "InitOverlap" "FinOverlap" "Time")
+
+
+#Put headers to out files
+expDir1=("noInitSol_Overflow_Overlap_Ignored_iter="*"_OverlapTh=90")
+outfileName1="noInit_Oflow_Olap_Ignored.csv"
+echo $headerInitSol > $outDir$outfileName1
+
+
+expDir2="noInitSol_Overflow_Overlap_Penalty_iter=*_OverlapTh=90"
+outfileName2="noInit_Oflow_Olap_Penalty.csv"
+echo $headerInitSol > $outDir$outfileName2
+
+
+expDir3="withInitSol_Overflow_Overlap_Ignored_iter=*_OverlapTh=90"
+outfileName3="Init_Oflow_Olap_Ignored.csv"
+echo $headerInitSol > $outDir$outfileName3
+
+
+expDir4="withInitSol_Overflow_Overlap_Penalty_iter=*_OverlapTh=90"
+outfileName4="Init_Oflow_Olap_Penalty.csv"
+echo $headerInitSol > $outDir$outfileName4
+
+
+metaOutfileName="AllScn.csv"
+echo $headerInitSol > $outDir$metaOutfileName
+
+
+for scn in "${scnArray[@]}"
+do
+ for algo in "${algoArray[@]}"
+ do
+  
+  
+  algoDir=$resultDirROOT$scn"/"$algo
+  
+  pushd $algoDir  > /dev/null 
+  expN=$(ls | wc -l)
+  echo "$expN experiments!"
+  popd > /dev/null
+  
+  echo " ******* I will do $NEXP passes for $algo!"
+     
+  # For each pass go to expDir and get the statistics
+  
+  for ((PASS=1; PASS <= NEXP ; PASS++)) 
+  do
+     echo -n "$PASS "
+     ####################################################################################################################################################################
+     #For noInitSol_Overflow_Overlap_Ignored_iter=300_OverlapTh=90
+     ####################################################################################################################################################################
+     
+     #Get statistics dumping them to separate text files for R processing later!
+     resultDir=$algoDir"/"$PASS"/"
+     pushd $resultDir  > /dev/null 
+     expDir1=("noInitSol_Overflow_Overlap_Ignored_iter="*"_OverlapTh=90")
+     echo "Checking for $algo $expDir1 dir." 
+     popd > /dev/null
+     
+     resultDir=$algoDir"/"$PASS"/"$expDir1
+     
+     if [ -d "$resultDir" ] 
+     then
+        echo "$algo has $expDir1 results." 
+        resultFiles=$resultDir"/*.txt"
+     
+        for f in $resultFiles
+        do
+          #echo "Processing $f file..."
+          # take action on each file. $f store current file name
+          
+          fname=$(echo $f | awk -F"/" '{print $NF}')
+          #echo "Fname: $fname"
+          
+          ndrone=$(echo $fname | awk -F"=" '{print $2}' | awk -F"_" '{print $1}')
+          #echo "ndrone: $ndrone"
+          
+          wCov=$(echo $fname | awk -F"_" '{print $3}')
+          #echo "wCov $wCov"
+          
+          wDiff=$(echo $fname | awk -F"_" '{print $6}')
+          #echo "wDiff $wDiff"
+          
+          initCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '1p')
+          finalCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '2p')
+          
+          initMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+        
+          initMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+          
+          initOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '1p')
+          finalTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '2p')
+          
+          elapsed=$(cat $f  | grep "elapsed"| awk -F" " '{print $3}')
+          
+          dataRow=$(printf '%-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl'\n' $scn $algo "0" $ndrone $wCov $wDiff "0" $initCov $finalCov $initTotDist $finalTotDist $initMeanDist $finalMeanDist $initMedianDist $finalMedianDist $initOverflow $finalOverflow $initOverlap $finalOverlap $elapsed)
+          
+          
+          echo $dataRow >> $outDir$outfileName1
+          echo $dataRow >> $outDir$metaOutfileName
+       
+        done
+     else
+        echo "$algo has NOT $expDir1 results. Skipping." 
+     fi
+     
+     
+    
+  
+   
+     
+     
+     ####################################################################################################################################################################
+     #For noInitSol_Overflow_Overlap_Penalty_iter=300_OverlapTh=90
+     ####################################################################################################################################################################
+     
+      
+     #Get statistics dumping them to separate text files for R processing later!
+     resultDir=$algoDir"/"$PASS"/"
+     pushd $resultDir  > /dev/null 
+     expDir2=("noInitSol_Overflow_Overlap_Penalty_iter="*"_OverlapTh=90")
+     echo "Checking for $algo $expDir2 dir." 
+     popd > /dev/null
+     
+     resultDir=$algoDir"/"$PASS"/"$expDir2
+     
+     if [ -d "$resultDir" ] 
+      then
+        echo "$algo has $expDir2 results." 
+        resultFiles=$resultDir"/*.txt"
+        
+        for f in $resultFiles
+        do
+          #echo "Processing $f file..."
+          # take action on each file. $f store current file name
+          
+          fname=$(echo $f | awk -F"/" '{print $NF}')
+          #echo "Fname: $fname"
+          
+          ndrone=$(echo $fname | awk -F"=" '{print $2}' | awk -F"_" '{print $1}')
+          #echo "ndrone: $ndrone"
+          
+          wCov=$(echo $fname | awk -F"_" '{print $3}')
+          #echo "wCov $wCov"
+          
+          wDiff=$(echo $fname | awk -F"_" '{print $6}')
+          #echo "wDiff $wDiff"
+          
+          initCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '1p')
+          finalCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '2p')
+          
+          initMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+          
+          initMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+          
+          initOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '1p')
+          finalTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '2p')
+          
+          elapsed=$(cat $f  | grep "elapsed"| awk -F" " '{print $3}')
+          
+          dataRow=$(printf '%-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl'\n' $scn $algo "0" $ndrone $wCov $wDiff "1" $initCov $finalCov $initTotDist $finalTotDist $initMeanDist $finalMeanDist $initMedianDist $finalMedianDist $initOverflow $finalOverflow $initOverlap $finalOverlap $elapsed)
+          
+          echo $dataRow >> $outDir$outfileName2
+          echo $dataRow >> $outDir$metaOutfileName
+        done
+     else
+        echo "$algo has NOT $expDir2 results. Skipping." 
+     fi
+     
+     ####################################################################################################################################################################
+     #For withInitSol_Overflow_Overlap_Ignored_iter=300_OverlapTh=90
+     ####################################################################################################################################################################
+     
+     #Get statistics dumping them to separate text files for R processing later!
+     resultDir=$algoDir"/"$PASS"/"
+     pushd $resultDir  > /dev/null 
+     expDir3=("withInitSol_Overflow_Overlap_Ignored_iter="*"_OverlapTh=90")
+     echo "Checking for $algo $expDir3 dir." 
+     popd > /dev/null
+     
+     resultDir=$algoDir"/"$PASS"/"$expDir3
+     
+     if [ -d "$resultDir" ] 
+      then
+        echo "$algo has $expDir3 results." 
+        resultFiles=$resultDir"/*.txt"
+     
+        for f in $resultFiles
+        do
+          #echo "Processing $f file..."
+          # take action on each file. $f store current file name
+          
+          fname=$(echo $f | awk -F"/" '{print $NF}')
+          #echo "Fname: $fname"
+          
+          ndrone=$(echo $fname | awk -F"=" '{print $2}' | awk -F"_" '{print $1}')
+          
+          wCov=$(echo $fname | awk -F"_" '{print $3}')
+          #echo "wCov $wCov"
+          
+          wDiff=$(echo $fname | awk -F"_" '{print $6}')
+          #echo "wDiff $wDiff"
+          
+          initCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '1p')
+          finalCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '2p')
+          
+          initMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+        
+          initMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+          
+          initOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '1p')
+          finalTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '2p')
+          
+          elapsed=$(cat $f  | grep "elapsed"| awk -F" " '{print $3}')
+          
+          dataRow=$(printf '%-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl'\n' $scn $algo "1" $ndrone $wCov $wDiff "0"  $initCov $finalCov $initTotDist $finalTotDist $initMeanDist $finalMeanDist $initMedianDist $finalMedianDist $initOverflow $finalOverflow $initOverlap $finalOverlap $elapsed)
+          
+          echo $dataRow >> $outDir$outfileName3
+          echo $dataRow >> $outDir$metaOutfileName
+        done
+     else
+        echo "$algo has NOT $expDir3 results. Skipping." 
+     fi
+     
+     ####################################################################################################################################################################
+     #For withInitSol_Overflow_Overlap_Penalty_iter=300_OverlapTh=90
+     ####################################################################################################################################################################
+     
+     #Get statistics dumping them to separate text files for R processing later!
+     resultDir=$algoDir"/"$PASS"/"
+     pushd $resultDir  > /dev/null 
+     expDir4=("withInitSol_Overflow_Overlap_Penalty_iter="*"_OverlapTh=90")
+     echo "Checking for $algo $expDir4 dir." 
+     popd > /dev/null
+     
+     resultDir=$algoDir"/"$PASS"/"$expDir4
+     
+     if [ -d "$resultDir" ] 
+      then
+        echo "$algo has $expDir4 results." 
+        resultFiles=$resultDir"/*.txt"
+     
+        for f in $resultFiles
+        do
+          #echo "Processing $f file..."
+          # take action on each file. $f store current file name
+          
+          fname=$(echo $f | awk -F"/" '{print $NF}')
+          #echo "Fname: $fname"
+          
+          ndrone=$(echo $fname | awk -F"=" '{print $2}' | awk -F"_" '{print $1}')
+          
+          wCov=$(echo $fname | awk -F"_" '{print $3}')
+          #echo "wCov $wCov"
+          
+          wDiff=$(echo $fname | awk -F"_" '{print $6}')
+          #echo "wDiff $wDiff"
+          
+          initCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '1p')
+          finalCov=$(cat $f | grep "xCoveredArea" | awk -F"(" '{print $2}'| awk -F% '{print $1}' | sed -n '2p')
+          
+          initMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMeanDist=$(cat $f | grep "Mean Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+        
+          initMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '1p')
+          finalMedianDist=$(cat $f | grep "Median Distance" | awk -F":" '{print $2}'| awk -Fm '{print $1}' | sed -n '2p')
+          
+          initOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverflow=$(cat $f  | grep "Overflow:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '1p')
+          finalOverlap=$(cat $f  | grep "Overlap:"| awk -F"(" '{print $2}' | awk -F% '{print $1}' | sed -n '2p')
+          
+          initTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '1p')
+          finalTotDist=$(cat $f  | grep "Total Distance"| awk -F":" '{print $2}' | awk -F"m" '{print $1}' | sed -n '2p')
+          
+          elapsed=$(cat $f  | grep "elapsed"| awk -F" " '{print $3}')
+          
+          dataRow=$(printf '%-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl', %-'$fl'\n' $scn $algo "1" $ndrone $wCov $wDiff "1" $initCov $finalCov $initTotDist $finalTotDist $initMeanDist $finalMeanDist $initMedianDist $finalMedianDist $initOverflow $finalOverflow $initOverlap $finalOverlap $elapsed)
+          
+          echo $dataRow >> $outDir$outfileName4
+          echo $dataRow >> $outDir$metaOutfileName
+        done
+     else
+        echo "$algo has NOT $expDir4 results. Skipping." 
+     fi
+  
+  done
+  
+   echo "Extracted from $algo dir!"
+
+ done #algo loop
+done #scn loop
+
+
+
+echo "Data files are created for plotting!"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

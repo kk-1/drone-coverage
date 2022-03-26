@@ -1,0 +1,423 @@
+ 
+shiny::runApp('/my_home_ssd/kemal/my_dir/my_prog/Camerino/drone/shiny/droneCoverageWithMapUI')
+Loading required package: shiny
+Find out advanced usage of shinyjs:
+	https://deanattali.com/shinyjs/advanced
+
+Attaching package: ‘shinyjs’
+
+The following object is masked from ‘package:shiny’:
+
+    runExample
+
+The following objects are masked from ‘package:methods’:
+
+    removeClass, show
+
+
+Attaching package: ‘shinyWidgets’
+
+The following object is masked from ‘package:shinyjs’:
+
+    alert
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Linking to GEOS 3.8.1, GDAL 3.0.4, PROJ 7.0.0
+WARNING: different compile-time and runtime versions for GEOS found:
+Linked against: 3.8.1-CAPI-1.13.3 compiled against: 3.8.0-CAPI-1.13.1
+It is probably a good idea to reinstall sf, and maybe rgeos and rgdal too
+deldir 0.1-25
+Loading required package: spatstat.data
+Loading required package: nlme
+
+Attaching package: ‘nlme’
+
+The following object is masked from ‘package:dplyr’:
+
+    collapse
+
+Loading required package: rpart
+
+spatstat 1.64-1       (nickname: ‘Help you I can, yes!’) 
+For an introduction to spatstat, type ‘beginner’ 
+
+Loading required package: parallel
+
+DEoptim package
+Differential Evolution algorithm in R
+Authors: D. Ardia, K. Mullen, B. Peterson and J. Ulrich
+
+rgdal: version: 1.5-10, (SVN revision 1006)
+Geospatial Data Abstraction Library extensions to R successfully loaded
+Loaded GDAL runtime: GDAL 3.0.4, released 2020/01/28
+Path to GDAL shared files: /usr/share/gdal
+GDAL binary built with GEOS: TRUE 
+Loaded PROJ runtime: Rel. 7.0.0, March 1st, 2020, [PJ_VERSION: 700]
+Path to PROJ shared files: /home/kemal/.local/share/proj:/usr/share/proj:/usr/share/proj
+PROJ CDN enabled:FALSE
+Linking to sp version:1.4-2
+To mute warnings of possible GDAL/OSR exportToProj4() degradation,
+use options("rgdal_show_exportToProj4_warnings"="none") before loading rgdal.
+
+Attaching package: ‘geosphere’
+
+The following object is masked from ‘package:spatstat’:
+
+    perimeter
+
+The following object is masked from ‘package:htmltools’:
+
+    span
+
+The following object is masked from ‘package:shiny’:
+
+    span
+
+Linking to liblwgeom 3.0.0beta1 r16016, GEOS 3.8.1, PROJ 7.0.0
+Warning in fun(libname, pkgname) :
+  GEOS versions differ: lwgeom has 3.8.1 sf has 3.8.0
+Loading required package: iterators
+phantomjs status: 1-PhJS déja installé 
+Global length: 11 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ FOR HMED AT 107 meter is 22 
+
+Listening on http://127.0.0.1:3940
+Warning in force(expr) : input string '�' cannot be translated to UTF-8, is it valid in 'ANSI_X3.4-1968'?
+Warning in force(expr) : input string '�' cannot be translated to UTF-8, is it valid in 'ANSI_X3.4-1968'?
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 107 meter is 22 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 107 meter is 22 
+Warning in sp::proj4string(obj) :
+  CRS object has comment, which is lost in output
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 106 meter is 22 
+Add BS point - Total points: 1 
+Add BS point - Total points: 2 
+Add BS point - Total points: 3 
+Add BS point - Total points: 4 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 107 meter is 22 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 108 meter is 21 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 108 meter is 21 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 109 meter is 21 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 113 meter is 19 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 113 meter is 19 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 114 meter is 19 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 113 meter is 19 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 112 meter is 20 
+Region area is 379857.1 meter^2
+ESTIMATED DRONES REQ AT 112 meter is 20 
+Voronoi
+
+     PLEASE NOTE:  The components "delsgs" and "summary" of the
+ object returned by deldir() are now DATA FRAMES rather than
+ matrices (as they were prior to release 0.0-18).
+ See help("deldir").
+ 
+     PLEASE NOTE: The process that deldir() uses for determining
+ duplicated points has changed from that used in version
+ 0.0-9 of this package (and previously). See help("deldir").
+
+
+DRONE ASSIGNMENT ACCORDING TO GIVEN NUMBER: 5 drones given to poly 1 out of 20 
+ESTIMATED DRONE ASSIGNMENT ACCORDING TO ALT 112 meter: 0 drones required to poly 1 out of 0 
+DRONE ASSIGNMENT ACCORDING TO GIVEN NUMBER: 4 drones given to poly 2 out of 20 
+ESTIMATED DRONE ASSIGNMENT ACCORDING TO ALT 112 meter: 0 drones required to poly 2 out of 0 
+DRONE ASSIGNMENT ACCORDING TO GIVEN NUMBER: 7 drones given to poly 3 out of 20 
+ESTIMATED DRONE ASSIGNMENT ACCORDING TO ALT 112 meter: 0 drones required to poly 3 out of 0 
+DRONE ASSIGNMENT ACCORDING TO GIVEN NUMBER: 5 drones given to poly 4 out of 20 
+ESTIMATED DRONE ASSIGNMENT ACCORDING TO ALT 112 meter: 0 drones required to poly 4 out of 0 
+5 drones for BS no 1 
+4 drones for BS no 2 
+7 drones for BS no 3 
+5 drones for BS no 4 
+Poly 1 has area 92333.52 square meters
+5 drones asked with r = 77 meter height = 109.9674 meter
+8 points asked. Points sampled: 9 
+Poly 1 circle 1 radius given: 77 radius est: 0.0006930007 
+Poly 1 circle 2 radius given: 77 radius est: 0.0006930007 
+Poly 1 circle 3 radius given: 77 radius est: 0.0006930007 
+Poly 1 circle 4 radius given: 77 radius est: 0.0006930007 
+Poly 1 circle 5 radius given: 77 radius est: 0.0006930007 
+Size of circle polygons in poly 1 is 42.7 Kb
+
+Poly 2 has area 75503.99 square meters
+4 drones asked with r = 78 meter height = 111.3955 meter
+8 points asked. Points sampled: 6 
+Poly 2 circle 1 radius given: 78 radius est: 0.0007020007 
+Poly 2 circle 2 radius given: 78 radius est: 0.0007020007 
+Poly 2 circle 3 radius given: 78 radius est: 0.0007020007 
+Poly 2 circle 4 radius given: 78 radius est: 0.0007020007 
+Size of circle polygons in poly 2 is 43.1 Kb
+
+Poly 3 has area 126317.5 square meters
+7 drones asked with r = 76 meter height = 108.5392 meter
+8 points asked. Points sampled: 9 
+Poly 3 circle 1 radius given: 76 radius est: 0.0006840007 
+Poly 3 circle 2 radius given: 76 radius est: 0.0006840007 
+Poly 3 circle 3 radius given: 76 radius est: 0.0006840007 
+Poly 3 circle 4 radius given: 76 radius est: 0.0006840007 
+Poly 3 circle 5 radius given: 76 radius est: 0.0006840007 
+Poly 3 circle 6 radius given: 76 radius est: 0.0006840007 
+Poly 3 circle 7 radius given: 76 radius est: 0.0006840007 
+Size of circle polygons in poly 3 is 59.1 Kb
+
+Poly 4 has area 85702.18 square meters
+5 drones asked with r = 74 meter height = 105.683 meter
+8 points asked. Points sampled: 6 
+Poly 4 circle 1 radius given: 74 radius est: 0.0006660007 
+Poly 4 circle 2 radius given: 74 radius est: 0.0006660007 
+Poly 4 circle 3 radius given: 74 radius est: 0.0006660007 
+Poly 4 circle 4 radius given: 74 radius est: 0.0006660007 
+Poly 4 circle 5 radius given: 74 radius est: 0.0006660007 
+Size of circle polygons in poly 4 is 58.1 Kb
+
+*****************************Initial soln created!
+--- Poly 1 drone 1 radius: 0.0006930007 meter 
+--- Poly 1 drone 2 radius: 0.0006930007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 1 drone 3 radius: 0.0006930007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 1 drone 4 radius: 0.0006930007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 1 drone 5 radius: 0.0006930007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 2 drone 1 radius: 0.0007020007 meter 
+--- Poly 2 drone 2 radius: 0.0007020007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 2 drone 3 radius: 0.0007020007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 2 drone 4 radius: 0.0007020007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 3 drone 1 radius: 0.0006840007 meter 
+--- Poly 3 drone 2 radius: 0.0006840007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 3 drone 3 radius: 0.0006840007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 3 drone 4 radius: 0.0006840007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 3 drone 5 radius: 0.0006840007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 3 drone 6 radius: 0.0006840007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 3 drone 7 radius: 0.0006840007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 4 drone 1 radius: 0.0006660007 meter 
+--- Poly 4 drone 2 radius: 0.0006660007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 4 drone 3 radius: 0.0006660007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 4 drone 4 radius: 0.0006660007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+--- Poly 4 drone 5 radius: 0.0006660007 meter 
+Warning in initSolMtx[[pIdx]][(3 * (dIdx - 1)):(3 * dIdx)] <- c(cntrCircle[1],  :
+  number of items to replace is not a multiple of replacement length
+*****************************Drawing initial soln
+***Poly 1 circle 1 Radius 0.0006930007 
+***Poly 1 circle 2 Radius 0.0006930007 
+***Poly 1 circle 3 Radius 0.0006930007 
+***Poly 1 circle 4 Radius 0.0006930007 
+***Poly 1 circle 5 Radius 0.0006930007 
+InitSoln: The score for poly 1 is: 0 
+Threshold exceeded! Circles 4 5 of polygon 1 
+Poly 1 circle 1 dist 106.999 
+Poly 1 circle 2 dist 106.999 
+Poly 1 circle 3 dist 106.999 
+Poly 1 circle 4 dist 106.999 
+Poly 1 circle 5 dist 106.999 
+Total area for poly 1 : 4.202551e-05 
+Covered: 5.573265e-06 --- 13.26 % 
+Total Overlap: 1.421951e-06 --- 3.38 % 
+Total Overflow: 5.483204e-07 --- 1.3 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 534.9951 
+***Poly 2 circle 1 Radius 0.0007020007 
+***Poly 2 circle 2 Radius 0.0007020007 
+***Poly 2 circle 3 Radius 0.0007020007 
+***Poly 2 circle 4 Radius 0.0007020007 
+InitSoln: The score for poly 2 is: 79.46407 
+Poly 2 circle 1 dist 106.999 
+Poly 2 circle 2 dist 106.999 
+Poly 2 circle 3 dist 106.999 
+Poly 2 circle 4 dist 106.999 
+Total area for poly 2 : 4.202551e-05 
+Covered: 5.296854e-06 --- 12.6 % 
+Total Overlap: 1.454234e-07 --- 0.35 % 
+Total Overflow: 7.503233e-07 --- 1.79 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 427.996 
+***Poly 3 circle 1 Radius 0.0006840007 
+***Poly 3 circle 2 Radius 0.0006840007 
+***Poly 3 circle 3 Radius 0.0006840007 
+***Poly 3 circle 4 Radius 0.0006840007 
+***Poly 3 circle 5 Radius 0.0006840007 
+***Poly 3 circle 6 Radius 0.0006840007 
+***Poly 3 circle 7 Radius 0.0006840007 
+InitSoln: The score for poly 3 is: 64.63278 
+Poly 3 circle 1 dist 106.999 
+Poly 3 circle 2 dist 106.999 
+Poly 3 circle 3 dist 106.999 
+Poly 3 circle 4 dist 106.999 
+Poly 3 circle 5 dist 106.999 
+Poly 3 circle 6 dist 106.999 
+Poly 3 circle 7 dist 106.999 
+Total area for poly 3 : 4.202551e-05 
+Covered: 8.4178e-06 --- 20.03 % 
+Total Overlap: 1.713117e-06 --- 4.08 % 
+Total Overflow: 1.574966e-07 --- 0.37 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 748.9932 
+***Poly 4 circle 1 Radius 0.0006660007 
+***Poly 4 circle 2 Radius 0.0006660007 
+***Poly 4 circle 3 Radius 0.0006660007 
+***Poly 4 circle 4 Radius 0.0006660007 
+***Poly 4 circle 5 Radius 0.0006660007 
+InitSoln: The score for poly 4 is: 64.31203 
+Poly 4 circle 1 dist 106.999 
+Poly 4 circle 2 dist 106.999 
+Poly 4 circle 3 dist 106.999 
+Poly 4 circle 4 dist 106.999 
+Poly 4 circle 5 dist 106.999 
+Total area for poly 4 : 4.202551e-05 
+Covered: 5.254662e-06 --- 12.5 % 
+Total Overlap: 9.766417e-07 --- 2.32 % 
+Total Overflow: 7.358588e-07 --- 1.75 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 534.9952 
+Coverage running
+Using deoptim algortihm - Minimizing - Does not accept initial solution - Tolerance is 0.0001
+
+
+***********************************************************
+Solving for poly 1 with 5 drones:
+Poly 1 soln in 174.414 secs
+5 circles r (in meter):
+139.3171  129.933  130.996  137.6353  139.5794  
+
+Poly 1 circle 1 dist 106.9982 
+Poly 1 circle 2 dist 106.9983 
+Poly 1 circle 3 dist 106.9983 
+Poly 1 circle 4 dist 106.9982 
+Poly 1 circle 5 dist 106.9982 
+Total area for poly 1 : 1.021563e-05 
+Covered: 1.021563e-05 --- 100 % 
+Total Overlap: 4.936548e-06 --- 48.32 % 
+Total Overflow: 7.473831e-06 --- 73.16 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 534.9913 
+The score is: -25.01669 
+***********************************************************
+Drawing soln
+
+
+***********************************************************
+Solving for poly 2 with 4 drones:
+Poly 2 soln in 173.056 secs
+4 circles r (in meter):
+140.7236  139.6885  139.3033  140.0733  
+
+Poly 2 circle 1 dist 106.9982 
+Poly 2 circle 2 dist 106.9982 
+Poly 2 circle 3 dist 106.9982 
+Poly 2 circle 4 dist 106.9982 
+Total area for poly 2 : 8.353638e-06 
+Covered: 8.353638e-06 --- 100 % 
+Total Overlap: 4.59639e-06 --- 55.02 % 
+Total Overflow: 6.541647e-06 --- 78.31 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 427.9928 
+The score is: -13.16931 
+***********************************************************
+Drawing soln
+
+
+***********************************************************
+Solving for poly 3 with 7 drones:
+Poly 3 soln in 185.738 secs
+7 circles r (in meter):
+88.51162  132.7133  126.2809  138.3865  122.4669  138.3638  127.0643  
+
+Poly 3 circle 1 dist 106.9989 
+Poly 3 circle 2 dist 106.9983 
+Poly 3 circle 3 dist 106.9984 
+Poly 3 circle 4 dist 106.9982 
+Poly 3 circle 5 dist 106.9984 
+Poly 3 circle 6 dist 106.9982 
+Poly 3 circle 7 dist 106.9984 
+Total area for poly 3 : 1.397483e-05 
+Covered: 1.397483e-05 --- 100 % 
+Total Overlap: 6.792166e-06 --- 48.6 % 
+Total Overflow: 6.002623e-06 --- 42.95 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 748.9888 
+The score is: -54.94485 
+***********************************************************
+Drawing soln
+
+
+***********************************************************
+Solving for poly 4 with 5 drones:
+Poly 4 soln in 198.168 secs
+5 circles r (in meter):
+134.7565  140.2408  138.639  137.7141  129.7171  
+
+Poly 4 circle 1 dist 106.9983 
+Poly 4 circle 2 dist 106.9982 
+Poly 4 circle 3 dist 106.9982 
+Poly 4 circle 4 dist 106.9982 
+Poly 4 circle 5 dist 106.9983 
+Total area for poly 4 : 9.481404e-06 
+Covered: 9.481404e-06 --- 100 % 
+Total Overlap: 6.527818e-06 --- 68.85 % 
+Total Overflow: 7.198319e-06 --- 75.92 % 
+Distance Diff Percent: 46.5 % 
+Max 3D Distance: 200 
+Total 3D Distance: 534.9912 
+The score is: -1.731836 
+***********************************************************
+Drawing soln
+Coverage solution took 732.698 secs
+

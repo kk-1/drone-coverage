@@ -1,0 +1,92 @@
+
+**********************************************************************************
+*Using GenSA algortihm - Minimizing - Accepts initial solution
+**********************************************************************************
+Command line with arguments:
+/usr/lib64/R/bin/exec/R --slave --no-restore --vanilla --file=ga-drone-parallel-Vscn1.R --args 3 1 1 1.0 0 0 0 1000 400 300 0 0 30 5 150 90 6
+Area size: 120000 
+Min drones necessary (at max h) for 100% coverage: 6 
+Max drones necessary (at min h) for 100% coverage: 4138 
+Region width= 400 m height= 300 m
+Using 6 drones!
+24 cores detected for parallel processing!
+Max 1000 iterations for evolutionary algorithms
+Drone beam angle is 60 degrees
+Drone height range as 5 - 150 meters
+Drone radius range as 3 - 87 meters
+Max distance for drones in the region (furthest diagonal and highest) 522.0153 meters
+Overlap threshold set as 90 %
+Percentage Weights: Coverage = 1 Overlap = 0 Overflow = 0 Dist = 0 Score = -1 
+
+**********************************************************************************
+
+**********************************************************************************
+*Initial Solution Statistics
+**********************************************************************************
+RegionArea:( 400 , 300 ): 120000 m^2 
+CoveredArea: 83506 m^2 ( 69.59 % ) 
+xCoveredArea: 83506 m^2 ( 69.59 % ) 
+TotCircleArea(with overlap): 83540 m^2 ( 69.62 % ) 
+Mean coverage of drones(overlap and overflow not considered): 20321 m^2 
+Overlap: 34 m^2 ( 0.04 % of covered, 0.03 % of region ) 
+Mean Overlap of drones: 5.666667 m^2 
+Overflow: 38386 m^2 ( 45.97 % of covered, 31.99 % of region ) 
+Mean Overflow of drones: 6397.667 m^2 
+Empty: 36494 m^2 ( 30.4 % of region ) 
+Mean Radius of drones: 80 m 
+Mean Height of drones: 139 m 
+Total Distance of drones from BS( 0 , 0 , 0 ): 1760.005 m 
+Max Distance a drone from BS( 0 , 0 , 0 ): 522.0153 m 
+Mean Distance of drones from BS( 0 , 0 , 0 ): 293.3342 m 
+Median Distance of drones from BS( 0 , 0 , 0 ): 287.3185 m 
+Percent Score: -69.58833 
+**********************************************************************************
+
+**********************************************************************************
+*Initial Drone positions
+**********************************************************************************
+Drone   1 at (x, y) = (173,   7)  r =  80  height = 139  dist = 222.034
+Drone   2 at (x, y) = (296, 109)  r =  80  height = 139  dist = 344.700
+Drone   3 at (x, y) = ( 11,  75)  r =  80  height = 139  dist = 158.326
+Drone   4 at (x, y) = ( 17, 283)  r =  80  height = 139  dist = 315.751
+Drone   5 at (x, y) = (335, 285)  r =  80  height = 139  dist = 461.271
+Drone   6 at (x, y) = (145, 164)  r =  80  height = 139  dist = 259.311
+**********************************************************************************
+
+ GenSA Algorithm: 1000.734 sec elapsed 
+
+**********************************************************************************
+*Final Solution Statistics
+**********************************************************************************
+RegionArea:( 400 , 300 ): 120000 m^2 
+CoveredArea: 115705 m^2 ( 96.42 % ) 
+xCoveredArea: 115705 m^2 ( 96.42 % ) 
+TotCircleArea(with overlap): 132791 m^2 ( 110.66 % ) 
+Mean coverage of drones(overlap and overflow not considered): 24033 m^2 
+Overlap: 17086 m^2 ( 14.77 % of covered, 14.24 % of region ) 
+Mean Overlap of drones: 2847.667 m^2 
+Overflow: 11407 m^2 ( 9.86 % of covered, 9.51 % of region ) 
+Mean Overflow of drones: 1901.167 m^2 
+Empty: 4295 m^2 ( 3.58 % of region ) 
+Mean Radius of drones: 86.72717 m 
+Mean Height of drones: 151 m 
+Total Distance of drones from BS( 0 , 0 , 0 ): 1854.805 m 
+Max Distance a drone from BS( 0 , 0 , 0 ): 522.0153 m 
+Mean Distance of drones from BS( 0 , 0 , 0 ): 309.1342 m 
+Median Distance of drones from BS( 0 , 0 , 0 ): 313.9564 m 
+Percent Score: -96.42083 
+Weights  (C, Olap, Oflow, Dist, Score) = ( 1 0 0 0 -1 ) 
+Percents (C, Olap, Oflow, Dist) = ( 96.42 14.77 9.86 40.78 ) 
+**********************************************************************************
+
+
+**********************************************************************************
+*Final Drone Positions
+**********************************************************************************
+Drone   1 at (x, y) = (344, 226)  r =  87  height = 151  dist = 438.421
+Drone   2 at (x, y) = (325,  76)  r =  87  height = 151  dist = 366.336
+Drone   3 at (x, y) = ( 76, 226)  r =  87  height = 151  dist = 282.229
+Drone   4 at (x, y) = (220, 223)  r =  87  height = 151  dist = 347.750
+Drone   5 at (x, y) = ( 57,  76)  r =  87  height = 151  dist = 178.398
+Drone   6 at (x, y) = (181,  77)  r =  87  height = 151  dist = 247.974
+**********************************************************************************

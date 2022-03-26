@@ -1,0 +1,84 @@
+
+**********************************************************************************
+*Using deoptim algortihm - Minimizing - Does not accept initial solution
+**********************************************************************************
+Command line with arguments:
+/usr/lib64/R/bin/exec/R --slave --no-restore --vanilla --file=ga-drone-parallel-Vscn1.R --args 2 1 0 1.0 0 0 0 300 400 300 0 0 30 5 150 90 2
+Area size: 120000 
+Min drones necessary (at max h) for 100% coverage: 6 
+Max drones necessary (at min h) for 100% coverage: 4138 
+Region width= 400 m height= 300 m
+Using 2 drones!
+24 cores detected for parallel processing!
+Max 300 iterations for evolutionary algorithms
+Drone beam angle is 60 degrees
+Drone height range as 5 - 150 meters
+Drone radius range as 3 - 87 meters
+Max distance for drones in the region (furthest diagonal and highest) 522.0153 meters
+Overlap threshold set as 90 %
+Percentage Weights: Coverage = 1 Overlap = 0 Overflow = 0 Dist = 0 Score = -1 
+
+**********************************************************************************
+
+**********************************************************************************
+*Initial Solution Statistics
+**********************************************************************************
+RegionArea:( 400 , 300 ): 120000 m^2 
+CoveredArea: 26323 m^2 ( 21.94 % ) 
+xCoveredArea: 26323 m^2 ( 21.94 % ) 
+TotCircleArea(with overlap): 26323 m^2 ( 21.94 % ) 
+Mean coverage of drones(overlap and overflow not considered): 23485 m^2 
+Overlap: 0 m^2 ( 0 % of covered, 0 % of region ) 
+Mean Overlap of drones: 0 m^2 
+Overflow: 20647 m^2 ( 78.44 % of covered, 17.21 % of region ) 
+Mean Overflow of drones: 10323.5 m^2 
+Empty: 93677 m^2 ( 78.1 % of region ) 
+Mean Radius of drones: 86 m 
+Mean Height of drones: 149 m 
+Total Distance of drones from BS( 0 , 0 , 0 ): 475.5999 m 
+Max Distance a drone from BS( 0 , 0 , 0 ): 522.0153 m 
+Mean Distance of drones from BS( 0 , 0 , 0 ): 237.8 m 
+Median Distance of drones from BS( 0 , 0 , 0 ): 237.8 m 
+Percent Score: -21.93583 
+**********************************************************************************
+
+**********************************************************************************
+*Initial Drone positions
+**********************************************************************************
+Drone   1 at (x, y) = ( 41,   7)  r =  86  height = 149  dist = 154.696
+Drone   2 at (x, y) = (283,  27)  r =  86  height = 149  dist = 320.966
+**********************************************************************************
+
+ DEoptimum Algorithm: 13.819 sec elapsed 
+
+**********************************************************************************
+*Final Solution Statistics
+**********************************************************************************
+RegionArea:( 400 , 300 ): 120000 m^2 
+CoveredArea: 48066 m^2 ( 40.05 % ) 
+xCoveredArea: 48066 m^2 ( 40.05 % ) 
+TotCircleArea(with overlap): 48066 m^2 ( 40.05 % ) 
+Mean coverage of drones(overlap and overflow not considered): 24033 m^2 
+Overlap: 0 m^2 ( 0 % of covered, 0 % of region ) 
+Mean Overlap of drones: 0 m^2 
+Overflow: 0 m^2 ( 0 % of covered, 0 % of region ) 
+Mean Overflow of drones: 0 m^2 
+Empty: 71934 m^2 ( 59.95 % of region ) 
+Mean Radius of drones: 86.76036 m 
+Mean Height of drones: 151 m 
+Total Distance of drones from BS( 0 , 0 , 0 ): 565.263 m 
+Max Distance a drone from BS( 0 , 0 , 0 ): 522.0153 m 
+Mean Distance of drones from BS( 0 , 0 , 0 ): 282.6315 m 
+Median Distance of drones from BS( 0 , 0 , 0 ): 282.6315 m 
+Percent Score: -40.055 
+Weights  (C, Olap, Oflow, Dist, Score) = ( 1 0 0 0 -1 ) 
+Percents (C, Olap, Oflow, Dist) = ( 40.05 0 0 45.86 ) 
+**********************************************************************************
+
+
+**********************************************************************************
+*Final Drone Positions
+**********************************************************************************
+Drone   1 at (x, y) = (292,  91)  r =  87  height = 151  dist = 341.095
+Drone   2 at (x, y) = ( 97, 137)  r =  87  height = 151  dist = 225.785
+**********************************************************************************

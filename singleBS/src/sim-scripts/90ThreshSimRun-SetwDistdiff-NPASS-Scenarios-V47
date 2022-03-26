@@ -1,0 +1,366 @@
+#!/bin/bash
+##############################################################################################################################################################################################################
+#Rscript --vanilla ga-drone-parallel-V47.R <algo> <readInitSolflag> <useInitSolflag> <wCov> <wOverflow> <wOverlap> <wDistdiff> <maxIter> <w> <h> <bsx> <bsy> <halftheta> <dhmin> <dhmax> <overlapTh> <ndrones>
+#Rscript --vanilla ga-drone-parallel-V47.R 0 1 1 1.0 -1.0 -1.0 4.0 100 400 300 0 0 30 5 150 60 12
+# Args:
+#      <algo>: Algo: 0 1 2 3
+#      <readInitSolflag> 1 - Read initsol from file 0 - Save it to file. Only for algos that accepts it
+#      <useInitSolflag> 1 - Use initsol. Only for algos that accepts it
+#      <wCov> Coverage weight +
+#      <wOverflow> Overflaw weight -
+#      <wOverlap> Overlap weight -
+#      <wDistdiff> Dist diff weight +
+#      <maxIter> For evolutionary algo number of iters without improvement
+#      <w> Region Width
+#      <h> Region Height
+#      <bsx> Base Stat. x coor
+#      <bsy> Base Stat. y coor
+#      <halftheta> Half of the drone beam angle 
+#      <dhmin> Drone min height
+#      <dhmax> Drone max height
+#      <overlapTh> Overlap threshold
+#      <ndrones> Drone number if -1 program will choose
+##############################################################################################################################################################################################################
+
+
+#Set the R code to run
+sourceName="ga-drone-parallel-V47.R"
+
+####################################################################################################################################################################
+#Set algo name and the code
+#0 for the GA - Genetic Algorithms
+#1 for the genoud - GENetic Optimization Using Derivatives 
+#2 for the DEoptim - Global Optimization by Differential Evolution -- This algo sucks!
+#3 for the GenSA - Generalized Simulated Annealing Function
+#4 for the optimParallel - parallel version of the L-BFGS-B method of General-purpose Optimization
+algo=$1
+####################################################################################################################################################################
+
+if [ ${algo} == 0 ] 
+then
+    algoName="GA"
+    ACCEPT_INITSOL=1
+    
+elif [ ${algo} == 1 ] 
+then
+    algoName="genoud"
+    ACCEPT_INITSOL=1
+    
+elif [ ${algo} == 2 ] 
+then
+    algoName="DEoptim"
+    ACCEPT_INITSOL=0
+    
+elif [ ${algo} == 3 ] 
+then
+    algoName="GenSA"
+    ACCEPT_INITSOL=1
+    
+elif [ ${algo} == 4 ] 
+then
+    algoName="optimParallel"
+    ACCEPT_INITSOL=1
+   
+else
+     echo "Invalid Algo"
+     exit -1
+fi
+
+####################################################################################################################################################################
+#Set the weight for distance
+#0 means we do not care
+#Between 0 and 1 we care a bit
+#1 or greater means we care very much
+
+wDistdiff=$2 #We care about distance. We want to maximize the coverage with min distance!!!
+
+#Set other pars that will not change in the loops below!!!
+wCov=1.0 
+maxIter=$3
+w=400 
+h=300
+bsx=0
+bsy=0 
+halftheta=30
+dhmin=5 
+dhmax=150 
+overlapTh=60
+####################################################################################################################################################################
+
+
+####################################################################################################################################################################
+# Set the number of rounds of experiment for the algorithm
+NPASS=$4
+####################################################################################################################################################################
+
+
+#Set the waiting time (sec) for each round
+my_wait=5
+
+#Set the number of drones array for each round
+#nDroneArray=(2 4 6 8 10 12)
+#nDroneArray=(4)
+nDroneArray=(6 8 10)
+
+#set InitSol dir from where the previously created initial solution for drone config will be utilized
+initSolDir="myInitSolConfigs/"
+
+####################################################################################################################################################################
+#Create dir for results
+theDate=$(date +"%m-%d-%Y")
+resultsDir="NResults_iter="$maxIter"_OverlapTh="$overlapTh"_WithDistLimit_"$theDate
+mkdir -p $resultsDir
+
+#Create algo dir
+algoDir=$resultsDir"/"$algoName
+mkdir -p $algoDir
+####################################################################################################################################################################
+
+
+
+for ((PASS=1; PASS <= NPASS ; PASS++)) 
+do
+   ################################################################### PASS LOOP BEGIN #######################################################################
+   
+   echo "PASS: $PASS of $NPASS for $algoName"
+  
+   
+   ####################################################################################################################################################################
+   #Run sims for algo starts below
+   ####################################################################################################################################################################
+   #BEGIN SIMS
+   ####################################################################################################################################################################
+   #Create dir
+   algoNDir=$algoDir"/"$PASS
+   mkdir -p $algoNDir
+   
+   ####################################################################################################################################################################
+
+   
+   
+   ####################################################################################################################################################################
+   #Sims in which Overlap and overflow is penalized
+   #Sim no Initsol first - create dir
+   algoSubDir=$algoNDir"/noInitSol_Overflow_Overlap_Penalty_iter="$maxIter"_OverlapTh="$overlapTh
+   mkdir -p $algoSubDir
+   
+   ####################################################################################################################################################################
+   readInitSolflag=1
+   useInitSolflag=0
+   wOverflow=-1.0
+   wOverlap=-1.0
+   
+   echo "Without init sol overlap-overflow penalty for $algoName with $maxIter iteration and $overlapTh overlap threshold."
+   
+   cnt=1
+   for nd in "${nDroneArray[@]}"
+   do
+     ndrones=$nd
+     initSolFile=$initSolDir"my_initDroneMtx-"$ndrones"drones.rds"
+     echo "InitSol file is $initSolFile"
+     #Copy the related initSol file and use it if it is necessary for the first group
+     cp $initSolFile .
+   
+     echo "Pass $cnt"
+     echo "Running $algoName with weights: $wCov - $wOverflow - $wOverlap - $wDistdiff for $ndrones drones. Flags: $readInitSolflag $useInitSolflag"
+     Rscript --vanilla $sourceName $algo $readInitSolflag $useInitSolflag $wCov $wOverflow $wOverlap $wDistdiff $maxIter $w $h $bsx $bsy $halftheta $dhmin $dhmax $overlapTh $ndrones
+     #Save results to dir
+     mv *.csv $algoSubDir
+     mv *.png $algoSubDir
+     mv *.txt $algoSubDir
+     ((cnt += 1))
+     #Wait for a bit
+     echo "Waiting $my_wait secs..."
+     wait
+     sleep ${my_wait}s
+   done
+   
+   
+   echo "*** noInitSol_Overflow_Overlap_Penalty_iter="$maxIter"_OverlapTh=$overlapTh finished!"
+   
+   ####################################################################################################################################################################
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   ####################################################################################################################################################################
+   #Sims in which Overlap and overflow is ignored
+   #Sim no Initsol first - create dir
+   algoSubDir=$algoNDir"/noInitSol_Overflow_Overlap_Ignored_iter="$maxIter"_OverlapTh="$overlapTh
+   mkdir -p $algoSubDir
+   
+   ####################################################################################################################################################################
+   readInitSolflag=1
+   useInitSolflag=0
+   wOverflow=0
+   wOverlap=0
+   
+   echo "Without init sol overlap-overflow ignored for $algoName with $maxIter iteration and $overlapTh overlap threshold."
+   
+   cnt=1
+   for nd in "${nDroneArray[@]}"
+   do
+     ndrones=$nd
+     echo "Pass $cnt"
+     echo "Running $algoName with weights: $wCov - $wOverflow - $wOverlap - $wDistdiff for $ndrones drones. Flags: $readInitSolflag $useInitSolflag"
+     Rscript --vanilla $sourceName $algo $readInitSolflag $useInitSolflag $wCov $wOverflow $wOverlap $wDistdiff $maxIter $w $h $bsx $bsy $halftheta $dhmin $dhmax $overlapTh $ndrones
+     #Save results to dir
+     mv *.csv $algoSubDir
+     mv *.png $algoSubDir
+     mv *.txt $algoSubDir
+     ((cnt += 1))
+     #Wait for a bit
+     echo "Waiting $my_wait secs..."
+     wait
+     sleep ${my_wait}s
+   done
+   
+   
+   echo "*** noInitSol_Overflow_Overlap_Ignored_iter="$maxIter"_OverlapTh=$overlapTh finished!"
+   
+   ####################################################################################################################################################################
+   
+   
+   
+   
+   
+   
+   
+   
+   ####################################################################################################################################################################
+   #The part below is for the algorithms that can use initSol
+   
+   if [ ${ACCEPT_INITSOL} == 0 ] 
+   then
+       rm *.rds
+       echo "*** PASS: $PASS of $NPASS finished for $algoName. Skipping initial soln part."
+       #Wait for a bit
+       echo "Waiting $my_wait secs..."
+       wait
+       sleep ${my_wait}s
+       continue
+       
+   elif [ ${ACCEPT_INITSOL} == 1 ] 
+   then
+   
+       echo "Run with initial soln!"  
+   else
+       echo "Invalid initial soln code"
+       exit -2
+   fi
+   
+   ####################################################################################################################################################################
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   ####################################################################################################################################################################
+   #Sims in which Overlap and overflow is penalized
+   #Sim with Initsol first - create dir
+   algoSubDir=$algoNDir"/withInitSol_Overflow_Overlap_Penalty_iter="$maxIter"_OverlapTh="$overlapTh
+   mkdir -p $algoSubDir
+   
+   ####################################################################################################################################################################
+   readInitSolflag=1
+   useInitSolflag=1
+   wOverflow=-1.0
+   wOverlap=-1.0
+   
+   echo "With init sol overlap-overflow penalty for $algoName with $maxIter iteration and $overlapTh overlap threshold."
+   
+   cnt=1
+   for nd in "${nDroneArray[@]}"
+   do
+     ndrones=$nd
+     echo "Pass $cnt"
+     echo "Running $algoName with weights: $wCov - $wOverflow - $wOverlap - $wDistdiff for $ndrones drones. Flags: $readInitSolflag $useInitSolflag"
+     Rscript --vanilla $sourceName $algo $readInitSolflag $useInitSolflag $wCov $wOverflow $wOverlap $wDistdiff $maxIter $w $h $bsx $bsy $halftheta $dhmin $dhmax $overlapTh $ndrones
+     #Save results to dir
+     mv *.csv $algoSubDir
+     mv *.png $algoSubDir
+     mv *.txt $algoSubDir
+     ((cnt += 1))
+     #Wait for a bit
+     echo "Waiting $my_wait secs..."
+     wait
+     sleep ${my_wait}s
+   done
+   
+   
+   echo "*** withInitSol_Overflow_Overlap_Penalty_iter="$maxIter"_OverlapTh=$overlapTh finished!"
+   
+   ####################################################################################################################################################################
+   
+   
+   
+   
+   ####################################################################################################################################################################
+   #Sims in which Overlap and overflow is ignored
+   #Sim with Initsol first - create dir
+   algoSubDir=$algoNDir"/withInitSol_Overflow_Overlap_Ignored_iter="$maxIter"_OverlapTh="$overlapTh
+   mkdir -p $algoSubDir
+   
+   ####################################################################################################################################################################
+   readInitSolflag=1
+   useInitSolflag=1
+   wOverflow=0
+   wOverlap=0
+   
+   echo "With init sol overlap-overflow ignored for $algoName with $maxIter iteration and $overlapTh overlap threshold."
+   
+   cnt=1
+   for nd in "${nDroneArray[@]}"
+   do
+     ndrones=$nd
+     echo "Pass $cnt"
+     echo "Running $algoName with weights: $wCov - $wOverflow - $wOverlap - $wDistdiff for $ndrones drones. Flags: $readInitSolflag $useInitSolflag"
+     Rscript --vanilla $sourceName $algo $readInitSolflag $useInitSolflag $wCov $wOverflow $wOverlap $wDistdiff $maxIter $w $h $bsx $bsy $halftheta $dhmin $dhmax $overlapTh $ndrones
+     #Save results to dir
+     mv *.csv $algoSubDir
+     mv *.png $algoSubDir
+     mv *.txt $algoSubDir
+     ((cnt += 1))
+     #Wait for a bit
+     echo "Waiting $my_wait secs..."
+     wait
+     sleep ${my_wait}s
+   done
+   
+   
+   echo "*** withInitSol_Overflow_Overlap_Ignored_iter="$maxIter"_OverlapTh=$overlapTh finished!"
+   
+   ####################################################################################################################################################################
+   
+   
+   #Remove the rds file and clean the dir for the next algo or next run!
+   rm *.rds
+   echo "*** PASS: $PASS of $NPASS finished for $algoName"
+   ################################################################### PASS LOOP END #######################################################################
+   
+   #Wait for a bit
+   echo "Waiting $my_wait secs..."
+   wait
+   sleep ${my_wait}s
+   
+done
+
+####################################################################################################################################################################
+#Remove the rds file and clean the dir for the next algo or next run!
+rm *.rds
+echo "*** All $algoName benchmarks finished!" 
+
+####################################################################################################################################################################
+#END SIMS
+####################################################################################################################################################################
+
+

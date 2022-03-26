@@ -1,0 +1,50 @@
+#!/bin/bash
+# Set $1 for algo
+####################################################################################################################################################################
+#Set algo name and the code
+#0 for the GA - Genetic Algorithms
+#1 for the genoud - GENetic Optimization Using Derivatives 
+#2 for the DEoptim - Global Optimization by Differential Evolution -- This algo sucks!
+#3 for the GenSA - Generalized Simulated Annealing Function
+#4 for the optimParallel - parallel version of the L-BFGS-B method of General-purpose Optimization
+####################################################################################################################################################################
+# Set $2 for the WDist  
+# Set $3 for number of iterations without improvement
+# Set $4 for number of rounds NPASS
+####################################################################################################################################################################
+#Scenarios
+# 1- Max coverage with no compromise + 0 0 0
+# 2- Max coverage with only overlap/overflow penalty + - - 0
+# 3- Max coverage with overlap/overflow penalty and min total distance of drones from VBS + - - +
+# 4- Max coverage with only min total distance of drones from VBS + 0 0 +
+
+
+
+
+#For GA scenarios
+./90ThreshSimRun-SetwDistdiff-NPASS-Scenarios-V47 0 0 15 1
+./90ThreshSimRun-SetwDistdiff-NPASS-Scenarios-V47 0 0.5 15 1
+
+
+exit
+
+
+
+#For GenSA scenarios
+./90ThreshSimRun-SetwDistdiff-NPASS-Scenarios-V47 3 0 5 1
+./90ThreshSimRun-SetwDistdiff-NPASS-Scenarios-V47 3 0.5 5 1
+
+exit
+
+
+
+
+
+
+
+#For DEoptim scenarios
+./90ThreshSimRun-SetwDistdiff-NPASS-Scenarios-V47 2 0 5 1
+exit
+./90ThreshSimRun-SetwDistdiff-NPASS-Scenarios-V47 2 0.5 5 1
+
+exit
