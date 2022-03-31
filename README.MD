@@ -11,7 +11,7 @@ https://doi.org/10.1007/978-3-030-44041-1_68
 
 Bibtex:  
 --------------------------------------------------------------------------------  
-```c++
+```latex
 @InProceedings{10.1007/978-3-030-44041-1_68,
 author="Kilic, Kemal Ihsan and Gemikonakli, Orhan and Mostarda, Leonardo", 
 editor="Barolli, Leonard and Amato, Flora and Moscato, Francesco and Enokido, Tomoya and Takizawa, Makoto",
@@ -35,7 +35,7 @@ https://doi.org/10.1504/ijwgs.2021.114574
 
 Bibtex:
 --------------------------------------------------------------------------------
-```c++
+```latex
 @article{doi:10.1504/IJWGS.2021.114574,
 author = {Kilic, Kemal Ihsan and Gemikonakli, Orhan and Mostarda, Leonardo},
 title = {Voronoi Tesselation-based load-balanced multi-objective priority-based 
