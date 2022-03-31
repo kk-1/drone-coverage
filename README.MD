@@ -58,7 +58,7 @@ singleBS:
 ----------
 Codes and results for the AINA 2020 paper.  
 
-![Simulator GUI](https://github.com/kk-1/drone-coverage/blob/main/singleBS/singleBS-GUI.png?raw=true =400x)
+![Simulator GUI](singleBS/singleBS-GUI.png =400x)
 
 multiBS: 
 -----------
