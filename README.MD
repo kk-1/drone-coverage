@@ -57,13 +57,13 @@ In this repo, there are 2 dirs:
 singleBS:
 ----------
 Codes and results for the AINA 2020 paper.  
-
+Simulator GUI:  
 ![Simulator GUI](https://github.com/kk-1/drone-coverage/blob/main/singleBS/singleBS-GUI.png?raw=true)
 
 multiBS: 
 -----------
 Codes and results for the International Journal of Web and Grid Services paper  
-
+Simulator GUI:  
 ![Simulator GUI](https://github.com/kk-1/drone-coverage/blob/main/multiBS/multiBS-GUI.png?raw=true)
 
 -------------------------------------------------------------------------------- 
