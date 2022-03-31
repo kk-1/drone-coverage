@@ -64,7 +64,7 @@ multiBS:
 -----------
 Codes and results for the International Journal of Web and Grid Services paper  
 
-![Simulator GUI](https://github.com/kk-1/drone-coverage/blob/main/multiBS/multiBS-GUI.png?raw=true =400x)
+![Simulator GUI](https://github.com/kk-1/drone-coverage/blob/main/multiBS/multiBS-GUI.png?raw=true)
 
 -------------------------------------------------------------------------------- 
 
